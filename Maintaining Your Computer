@@ -1,20 +1,22 @@
 
 	* Disk Drive Fragmentation
-Disk drive fragmentation is just a natural effect of how information gets written to your hard drive. Files and data are not stored in organized, consecutive memory addresses. Many times there aren’t enough blocks of memory available for that, so Windows manages tracking and organizing the storage of information on segments of memory all over the drive.
-Over time, the hard drive can get so fragmented with very few open, consecutive blocks of memory that it takes the OS much longer to store or obtain data. You can prevent this from happening by ensuring your hard drives don’t get too fragmented.
+	Disk drive fragmentation is just a natural effect of how information gets written to your hard drive. Files and data are not stored in organized, consecutive memory addresses. Many times there aren’t enough blocks of memory available for that, so Windows manages tracking and organizing the storage of information on segments of memory all over the drive.
+	Over time, the hard drive can get so fragmented with very few open, consecutive blocks of memory that it takes the OS much longer to store or obtain data. You can prevent this from happening by ensuring your hard drives don’t get too fragmented.
 
 
 
 	* Hard Drive Failure
-Hard drives have a limited lifespan, unfortunately. Over time, specific areas called “sectors” of a hard drive start to fail - these areas can’t store information anymore. This can cause a variety of strange behaviors. The computer might randomly freeze, display an error screen, or run very slowly.
-You can check for bad sectors on your drives by running a chkdsk scan every now and then. To do this, just open a cmd window as an administrator, and run the command:
+	Hard drives have a limited lifespan, unfortunately. Over time, specific areas called “sectors” of a hard drive start to fail - these areas can’t store information anymore. This can cause a variety of strange behaviors. The computer might randomly freeze, display an error screen, or run very slowly.
+	You can check for bad sectors on your drives by running a chkdsk scan every now and then. To do this, just open a cmd window as an administrator, and run the command:
 
-          chkdsk c:
+    chkdsk c:
 
 
 	* Corrupt System Files
-Another symptom of installing too much (bad) software are corrupt system files. This is why it’s also a good idea to regularly check the health of your operating system by running a system scan. You can do this using the sfc command. Open a command window as an administrator and type the command:
-sfc /scannow
+	Another symptom of installing too much (bad) software are corrupt system files. This is why it’s also a good idea to regularly check the health of your operating system by running a system scan. You can do this using the sfc command. Open a command window as an administrator and type the command:
+	
+	sfc /scannow
+
 
 
 
@@ -22,13 +24,11 @@ Things Windows Can Clear Automatically on Shutdown (Link)
 
 
 	* Recently Opened Documents
-For some programs, Windows will keep track of what files you recently viewed. For example, open something like Microsoft Word and right-click it on the Taskbar. The jump list will display all your recent documents.
-
-
+	For some programs, Windows will keep track of what files you recently viewed. For example, open something like Microsoft Word and right-click it on the Taskbar. The jump list will display all your recent documents.
 
 	1. Windows Run → Type regedit → press OK
 	2. On the left-hand pane, navigate to the following path:
-HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion
+		HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion
 	3. Check if you have a Policies folder here, with an Explorer folder within. If you have neither or only one, we’ll need to create them. First, right-click CurrentVersion and click New > Key. Name the folder Policies and press Enter. Second, right-click Policies and click New > Key. Name the folder Explorer and press Enter. Once done, click into that folder.
 	4. In the top menu, go to Edit > New > DWORD (32-bit) Value. Name the value ClearRecentDocsOnExit and press Enter. Next, double-click the value and change the Value data to 1. Finally, click OK. If you ever want to disable this, navigate back to this point and set it to 0 instead.
 
@@ -36,34 +36,28 @@ HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion
 
 
 	* Page File
-Windows uses RAM to store files temporarily, but it moves these across to the page file when it runs low on space. While your RAM is automatically cleared on shutdown, the page file is not. We can clear this automatically on shutdown using the Registry Editor.
-Once enabled, your computer will take longer to shut down. The additional time will depend on the speed and size of your page file. The risk is minimal as you can revert the change if needed, but be prepared to notice a difference.
-
-
-
+	Windows uses RAM to store files temporarily, but it moves these across to the page file when it runs low on space. While your RAM is automatically cleared on shutdown, the page file is not. We can clear this automatically on shutdown using the Registry Editor.
+	Once enabled, your computer will take longer to shut down. The additional time will depend on the speed and size of your page file. The risk is minimal as you can revert the change if needed, but be prepared to notice a difference.
 
 	1. Windows Run → Type regedit → press OK
 	2. On the left-hand pane, navigate to the following path:
-HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management
-
+		HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management
 	3. On the right-hand pane, you should see a row for ClearPageFileAtShutdown. If you don’t see this, right-click Memory Management on the left and click New > DWORD (32-bit) Value. Input ClearPageFileAtShutdown and press Enter.
-
 	4. Double-click the ClearPageFileAtShutdown value and change Value data to 1. To finish, click OK. If you want to turn this off again, come back to this screen and set the Value data to 0.
 
 
 
 
 	* Temporary Files
-As you use your computer, it automatically creates temporary files that it might need to call upon for that particular session, like error logs or images. These are stored in a folder called Temp.
-To see your Temp folder, press Windows key + R to open Run, input %temp%, and click OK.
+	As you use your computer, it automatically creates temporary files that it might need to call upon for that particular session, like error logs or images. These are stored in a folder called Temp.
+	To see your Temp folder, press Windows key + R to open Run, input %temp%, and click OK.
 
-
-          We can create a batch file that will automatically clear out your Temp folder whenever you sign into Windows.
+    We can create a batch file that will automatically clear out your Temp folder whenever you sign into Windows.
 
 	1. To begin, open Notepad and input the following:
-rd %temp% /s /q
-md %temp%
+		rd %temp% /s /q
+		md %temp%
 	2. Click File > Save As… and input the following File name:
-%appdata%\microsoft\windows\start menu\programs\startup\temp.bat
+		%appdata%\microsoft\windows\start menu\programs\startup\temp.bat
 	3. Finally, click Save. This will save the batch file in your Startup folder. If you want to stop the process, navigate to the above folder path and delete temp.bak.
 
